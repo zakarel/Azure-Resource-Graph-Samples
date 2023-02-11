@@ -1,0 +1,12 @@
+resources
+| where type =~ 'microsoft.compute/disks'
+| extend skuName=tostring(sku.name)
+| extend accountType=case(skuName =~ 'Standard_LRS', 'Standard HDD LRS',
+                          skuName =~ 'StandardSSD_LRS', 'Standard SSD LRS',
+                          skuName =~ 'UltraSSD_LRS', 'Ultra disk LRS',
+                          skuName =~ 'Premium_LRS', 'Premium SSD LRS',
+                          skuName =~ 'Standard_ZRS', 'Zone-redundant',
+                          skuName =~ 'Premium_ZRS', 'Premium SSD ZRS',
+                          skuName =~ 'StandardSSD_ZRS', 'Standard SSD ZRS',
+                          skuName)
+| where accountType contains "Premium" 
