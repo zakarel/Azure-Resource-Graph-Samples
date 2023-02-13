@@ -1,0 +1,11 @@
+BlackboxMonitoringActivity
+| where TIMESTAMP > ago(14d)
+| where subscriptionID  in("5f17b774-a6d1-49ac-9635-cee41f1bbd18",
+                           "01ca856e-d1ab-4ec0-a86b-db50ae188d22",
+                           "5dba5d91-e564-483c-ba59-998e6b9bbea0")
+| extend agentPoolInfo=todynamic(agentPoolContainerRuntimes)
+| mv-expand agentPoolInfo
+| extend agentPoolName=tostring(agentPoolInfo.agentPoolName)
+| summarize max(agentNodeCount), 
+            max(customerPodCount) by clusterName, agentPoolName, subscriptionID
+| summarize count(clusterName), sum(max_agentNodeCount), sum(max_customerPodCount) by subscriptionID
