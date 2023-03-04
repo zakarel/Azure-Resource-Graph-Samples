@@ -1,0 +1,4 @@
+resources
+| where type == "microsoft.compute/disks"
+| project Disk_name=name, SKU=sku.name, Size=strcat(properties['diskSizeGB'],"GB"), IOPS=tolong(properties['diskIOPSReadWrite'])
+| sort by Size
