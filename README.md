@@ -4,8 +4,8 @@
 
 ## Projects
 - Disks / Get Premium/SSD/HDD Disks in a list
-- Network - WIP
-- VM - WIP
+- [WIP] Network - WIP
+- [WIP] VM
 
 ## Getting Started
 
